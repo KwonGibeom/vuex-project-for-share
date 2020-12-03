@@ -12,14 +12,14 @@
 </template>
 
 <script>
-  import AllUsers from '@/components/Users/AllUsers'
-  import SignUp from '@/components/Users/SignUp'
+  import AllUsers from "@/components/Users/AllUsers";
+  import SignUp from "@/components/Users/SignUp";
 
   export default {
     components: {
       AllUsers,
       SignUp
     },
-  }
+  };
 
 </script>
