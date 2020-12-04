@@ -1,28 +1,36 @@
-/* eslint-disable prettier/prettier */
+// eslint-disable-next-line no-undef
 module.exports = {
-  root: true,
-  env: {
-    node: true
+  "env": {
+    "browser": true,
+    "es2021": true
   },
-  extends: [
+  "extends": [
     "eslint:recommended",
-    "plugin:vue/essential",
-    "prettier",
-    "plugin:prettier/recommended"
+    "plugin:vue/essential"
   ],
-  plugins: ['prettier'],
-  rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "prettier/prettier": [
-      "warn",
-      {
-        semi: true,
-        trailingComma: "none",
-        bracketSpacing: true,
-        useTabs: false
-      }
-    ]
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
   },
-  
+  "plugins": [
+    "vue"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "windows"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
 };
