@@ -18,11 +18,24 @@
             <v-list-tile-title>Users</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile router :to="{ name: 'login' }" exact>
+          <v-list-tile-action>
+            <v-icon>login</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Login</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Application</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat v-if="isLogin">웰컴</v-btn>
+        <v-btn flat v-else router :to="{name: 'login'}">Log In</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <router-view />
@@ -34,10 +47,14 @@
 </template>
 
 <script>
+import { mapState} from "vuex";
 export default {
   data: () => ({
     drawer: null
   }),
+  computed: {
+    ...mapState(["isLogin"])
+  },
   props: {
     source: String
   }

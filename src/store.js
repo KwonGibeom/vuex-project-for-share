@@ -8,27 +8,35 @@ export default new Vuex.Store({
     //data
     allUsers: [
       {
-        userId: "hoza123",
+        id: 1,
+        email: "hoza",
+        userId: "hoza",
         password: "123",
         name: "Hoza",
         address: "Seoul",
         src: "https://goo.gl/oqLfJR"
       },
       {
-        userId: "max123",
+        id: 2,
+        email: "max",
+        userId: "max",
         password: "456",
         name: "Max",
         address: "Berlin",
         src: "https://goo.gl/Ksk9B9"
       },
       {
-        userId: "lego123",
+        id: 3,
+        email: "lego",
+        userId: "lego",
         password: "789",
         name: "Lego",
         address: "Busan",
         src: "https://goo.gl/x7SpCD"
       }
-    ]
+    ],
+    isLogin: false,
+    isLoginError: false
   },
   getters: {
     //computed
@@ -51,11 +59,29 @@ export default new Vuex.Store({
   mutations: {
     addUsers: (state, payload) => {
       state.allUsers.push(payload);
+    },
+    loginSuccess(state){
+      state.isLogin = true;
+    },
+    loginError(state){
+      state.isLogin = false;
+      state.isLoginError = true;
     }
   },
   actions: {
     addUsers: ({ commit }, payload) => {
       commit("addUsers", payload);
+    },
+    login({ state, commit}, loginObj){
+      let selectedUser = null;
+      state.allUsers.forEach(user => {
+        if(user.email === loginObj.email) selectedUser = user;
+      });
+      selectedUser === null
+        ? commit("loginError")
+        : selectedUser.password !== loginObj.password
+          ? commit("loginError")
+          : commit("loginSuccess");
     }
   }
 });
