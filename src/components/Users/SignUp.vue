@@ -49,10 +49,10 @@ export default {
     },
     clearForm() {
       (this.userId = null),
-        (this.password = null),
-        (this.name = null),
-        (this.address = null),
-        (this.src = null);
+      (this.password = null),
+      (this.name = null),
+      (this.address = null),
+      (this.src = null);
     }
   }
 };

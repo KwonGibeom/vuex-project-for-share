@@ -21,6 +21,12 @@ export default new Router({
         import(/* webpackChunkName: "users" */ "./views/Users.vue")
     },
     {
+      path: "/login",
+      name: "login",
+      component: () =>
+        import(/* webpackChunkName: "users" */ "./views/Login.vue")
+    },
+    {
       path: "/*",
       redirect: { name: "home" }
     }
