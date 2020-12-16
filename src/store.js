@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "./router";
 
 Vue.use(Vuex);
 
@@ -36,7 +37,8 @@ export default new Vuex.Store({
       }
     ],
     isLogin: false,
-    isLoginError: false
+    isLoginError: false,
+    userInfo: null
   },
   getters: {
     //computed
@@ -60,12 +62,19 @@ export default new Vuex.Store({
     addUsers: (state, payload) => {
       state.allUsers.push(payload);
     },
-    loginSuccess(state){
+    loginSuccess(state, payload){
       state.isLogin = true;
+      state.isloginError = false;
+      state.userInfo = payload;
     },
     loginError(state){
       state.isLogin = false;
       state.isLoginError = true;
+    },
+    logout(state) {
+      state.isLogin = false;
+      state.isLoginError = false;
+      state.userInfo = null;
     }
   },
   actions: {
@@ -77,11 +86,17 @@ export default new Vuex.Store({
       state.allUsers.forEach(user => {
         if(user.email === loginObj.email) selectedUser = user;
       });
-      selectedUser === null
-        ? commit("loginError")
-        : selectedUser.password !== loginObj.password
-          ? commit("loginError")
-          : commit("loginSuccess");
+      if(selectedUser === null || selectedUser.password!== loginObj.password){
+        commit("loginError");
+      }else{
+        commit("loginSuccess", selectedUser);
+        //this.$router.push({ name: "mypage});
+        router.push({name: "mypage"});
+      }
+    },
+    logout({commit}) {
+      commit("logout");
+      router.push({name: "login"});
     }
   }
 });
