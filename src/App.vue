@@ -57,7 +57,6 @@
             flat
             dark
             icon
-            v-on="on"
           >
             <v-icon>more_vert</v-icon>
           </v-btn>

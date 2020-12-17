@@ -22,24 +22,22 @@
                     </v-toolbar>
                     <div class="pa-3">
                         <v-text-field
-                            v-model="email"
-                            label="email"
-                            :rules="rules"
-                            hide-details="auto"
-                            @keyup.enter="login({email, password})"
+                            v-model="userId"
+                            label="userId"
+                            @keyup.enter="login({userId, password})"
                         ></v-text-field>
                         <v-text-field 
                             v-model="password"
                             type="password" 
                             label="password"
-                            @keyup.enter="login({email, password})"
+                            @keyup.enter="login({userId, password})"
                         ></v-text-field>
                         <v-btn 
                             large 
                             block 
                             depressed 
                             color="primary" 
-                            @click="login({email, password})"
+                            @click="login({userId, password})"
                             >
                             로그인
                         </v-btn>
@@ -55,7 +53,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   data(){
     return {
-      email: null,
+      userId: null,
       password: null,
       isError: false,
       loginSuccess: false

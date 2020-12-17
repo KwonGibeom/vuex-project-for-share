@@ -9,33 +9,34 @@ export default new Vuex.Store({
     //data
     allUsers: [
       {
-        id: 1,
-        email: "hoza",
         userId: "hoza",
         password: "123",
         name: "Hoza",
         address: "Seoul",
-        src: "https://goo.gl/oqLfJR"
+        src: ""
       },
       {
-        id: 2,
-        email: "max",
         userId: "max",
         password: "456",
         name: "Max",
         address: "Berlin",
-        src: "https://goo.gl/Ksk9B9"
+        src: ""
       },
       {
-        id: 3,
-        email: "lego",
         userId: "lego",
         password: "789",
         name: "Lego",
         address: "Busan",
-        src: "https://goo.gl/x7SpCD"
+        src: ""
       }
     ],
+    User: {
+      userId: null,
+      password: null,
+      name: null,
+      address: null,
+      src: ""
+    },
     isLogin: false,
     isLoginError: false,
     userInfo: null
@@ -56,7 +57,7 @@ export default new Vuex.Store({
     },
     percentOfSeoul: (state, getters) => {
       return Math.round((getters.countOfSeoul / getters.allUsersCount) * 100);
-    }
+    },
   },
   mutations: {
     addUsers: (state, payload) => {
@@ -75,7 +76,10 @@ export default new Vuex.Store({
       state.isLogin = false;
       state.isLoginError = false;
       state.userInfo = null;
-    }
+    },
+    selectUser: (state, payload) => {
+      state.User = payload;
+    },
   },
   actions: {
     addUsers: ({ commit }, payload) => {
@@ -84,7 +88,7 @@ export default new Vuex.Store({
     login({ state, commit}, loginObj){
       let selectedUser = null;
       state.allUsers.forEach(user => {
-        if(user.email === loginObj.email) selectedUser = user;
+        if(user.userId === loginObj.userId) selectedUser = user;
       });
       if(selectedUser === null || selectedUser.password!== loginObj.password){
         commit("loginError");
@@ -97,6 +101,12 @@ export default new Vuex.Store({
     logout({commit}) {
       commit("logout");
       router.push({name: "login"});
-    }
+    },
+    selectUser: ({ state, commit }, payload) => {
+      if(state.User.userId === payload.userId){
+        state.User = null;
+      }
+      commit("selectUser", payload);
+    },
   }
 });
