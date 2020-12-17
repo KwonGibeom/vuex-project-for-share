@@ -26,18 +26,21 @@
                             label="email"
                             :rules="rules"
                             hide-details="auto"
+                            @keyup.enter="login({email, password})"
                         ></v-text-field>
                         <v-text-field 
                             v-model="password"
                             type="password" 
                             label="password"
+                            @keyup.enter="login({email, password})"
                         ></v-text-field>
                         <v-btn 
                             large 
                             block 
                             depressed 
                             color="primary" 
-                            @click="login({email, password})">
+                            @click="login({email, password})"
+                            >
                             로그인
                         </v-btn>
                     </div>
