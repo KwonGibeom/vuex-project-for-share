@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "./router";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -85,7 +86,7 @@ export default new Vuex.Store({
     addUsers: ({ commit }, payload) => {
       commit("addUsers", payload);
     },
-    login({ state, commit}, loginObj){
+    login({state, commit}, loginObj){
       let selectedUser = null;
       state.allUsers.forEach(user => {
         if(user.userId === loginObj.userId) selectedUser = user;
@@ -97,6 +98,48 @@ export default new Vuex.Store({
         //this.$router.push({ name: "mypage});
         router.push({name: "mypage"});
       }
+    },
+    // login({dispatch}, loginObj){
+    //   axios.post("https://reqres.in/api/login",
+    //     {
+    //       email: loginObj.userId, //"eve.holt@reqres.in"
+    //       password: loginObj.password //cityslicka
+    //     })
+    //     .then(res => {
+    //       let token = res.data.token;
+    //       localStorage.setItem("access-token", token);
+    //       dispatch("getMemberInfo");
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
+    //     .then(() => {
+    //     });
+    // },
+    getMemberInfo({commit}){
+      let token = localStorage.getItem("access-token");
+      let config = {
+        headers: {
+          "access-token": token
+        }
+      };
+      axios.get("https://reqres.in/api/users/2", config)
+        .then(response => {
+          let userInfo = {
+            userId: response.data.data.id,
+            name: response.data.data.first_name,
+            address: response.data.data.last_name,
+            src: response.data.data.avatar
+          };
+          commit("loginSuccess", userInfo);
+          router.push({name: "mypage"});
+        })
+        .catch(error => {
+          alert("이메일과 비밀번호를 넣어주세요.");
+          console.log(error);
+        })
+        .then(() => {
+        });
     },
     logout({commit}) {
       commit("logout");
