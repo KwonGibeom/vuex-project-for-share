@@ -11,5 +11,8 @@ export const EventBus = new Vue();
 new Vue({
   router,
   store,
+  beforeCreate(){
+    this.$store.dispatch("getMemberInfo");
+  },
   render: (h) => h(App)
 }).$mount("#app");
